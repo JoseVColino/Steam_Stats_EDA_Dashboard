@@ -6,16 +6,14 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-def load_steam_data(file_path: str) -> pd.DataFrame:
+def load_steam_data() -> pd.DataFrame:
     """
     Load Steam dataset from CSV file.
     
-    Args:
-        file_path (str): Path to the CSV file
-        
     Returns:
         pd.DataFrame: Loaded Steam dataset
     """
+    file_path = Path.cwd() / 'data' / 'raw' / 'games_march2025_full.csv'
     try:
         df = pd.read_csv(file_path)
         print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
@@ -62,3 +60,6 @@ def save_processed_data(df: pd.DataFrame, file_path: str) -> None:
         print(f"Data saved to {file_path}")
     except Exception as e:
         print(f"Error saving data: {str(e)}")
+
+if __name__ == '__main__':
+    print(Path.cwd() / 'data' / 'raw' / 'games_march2025_full.csv')
