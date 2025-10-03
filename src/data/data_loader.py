@@ -6,16 +6,37 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-def load_steam_data() -> pd.DataFrame:
+def load_steam_data(path: Path) -> pd.DataFrame:
     """
-    Load Steam dataset from CSV file.
+    Load Steam dataset from CSV file in path.
     
     Returns:
         pd.DataFrame: Loaded Steam dataset
     """
-    file_path = Path.cwd() / 'data' / 'raw' / 'games_march2025_full.csv'
+    file_path = path
     try:
         df = pd.read_csv(file_path)
+        print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
+        return df
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return pd.DataFrame()
+    except Exception as e:
+        print(f"Error loading data: {str(e)}")
+        return pd.DataFrame()
+    
+
+def quick_load_steam_data(path: Path) -> pd.DataFrame:
+    """
+    Load first five lines from steam kaggle dataste from Path.cwd() / 'data' / 'raw' / 'games_march2025_full.csv'
+    
+    Returns:
+        pd.DataFrame: with only the first five lines
+    """
+
+    file_path = path
+    try:
+        df = pd.read_csv(file_path,nrows=5)
         print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
         return df
     except FileNotFoundError:
@@ -60,6 +81,3 @@ def save_processed_data(df: pd.DataFrame, file_path: str) -> None:
         print(f"Data saved to {file_path}")
     except Exception as e:
         print(f"Error saving data: {str(e)}")
-
-if __name__ == '__main__':
-    print(Path.cwd() / 'data' / 'raw' / 'games_march2025_full.csv')
