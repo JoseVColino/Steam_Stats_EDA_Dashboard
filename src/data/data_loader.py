@@ -28,7 +28,7 @@ def load_steam_data(path: Path) -> pd.DataFrame:
 
 def quick_load_steam_data(path: Path) -> pd.DataFrame:
     """
-    Load first five lines from steam kaggle dataste from Path.cwd() / 'data' / 'raw' / 'games_march2025_full.csv'
+    Load first five lines from path csv
     
     Returns:
         pd.DataFrame: with only the first five lines
