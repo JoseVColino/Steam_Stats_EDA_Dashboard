@@ -26,6 +26,27 @@ def load_steam_data(file_path: str) -> pd.DataFrame:
     except Exception as e:
         print(f"Error loading data: {str(e)}")
         return pd.DataFrame()
+    
+def quick_load_steam_data(file_path: str) -> pd.DataFrame:
+    """
+    Load 5 lines from Steam dataset at CSV file.
+    
+    Args:
+        file_path (str): Path to the CSV file
+        
+    Returns:
+        pd.DataFrame: Loaded Steam dataset
+    """
+    try:
+        df = pd.read_csv(file_path,nrows=5)
+        print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
+        return df
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return pd.DataFrame()
+    except Exception as e:
+        print(f"Error loading data: {str(e)}")
+        return pd.DataFrame()
 
 
 def save_processed_data(df: pd.DataFrame, file_path: str) -> None:
