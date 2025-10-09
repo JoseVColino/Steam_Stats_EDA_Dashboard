@@ -1,1 +1,4 @@
 raw
+.venv
+__pycache__
+steam_stats.egg-info
