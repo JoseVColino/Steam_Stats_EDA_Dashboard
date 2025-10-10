@@ -1,6 +1,6 @@
 # 🎮 Steam Stats EDA Dashboard
 
-College project to practice data analysis and dashboard creation using Steam game statistics from Kaggle.
+College project to practice data analysis and dashboard creation using Steam game statistics from Kaggle: https://www.kaggle.com/datasets/artermiloff/steam-games-dataset?select=games_march2025_full.csv.
 
 ## 📋 Project Overview
 

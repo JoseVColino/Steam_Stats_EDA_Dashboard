@@ -6,18 +6,37 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-def load_steam_data(file_path: str) -> pd.DataFrame:
+def load_steam_data(path: Path) -> pd.DataFrame:
     """
-    Load Steam dataset from CSV file.
+    Load Steam dataset from CSV file in path.
     
-    Args:
-        file_path (str): Path to the CSV file
-        
     Returns:
         pd.DataFrame: Loaded Steam dataset
     """
+    file_path = path
     try:
         df = pd.read_csv(file_path)
+        print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
+        return df
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return pd.DataFrame()
+    except Exception as e:
+        print(f"Error loading data: {str(e)}")
+        return pd.DataFrame()
+    
+
+def quick_load_steam_data(path: Path) -> pd.DataFrame:
+    """
+    Load first five lines from path csv
+    
+    Returns:
+        pd.DataFrame: with only the first five lines
+    """
+
+    file_path = path
+    try:
+        df = pd.read_csv(file_path,nrows=5)
         print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
         return df
     except FileNotFoundError:
@@ -29,25 +48,30 @@ def load_steam_data(file_path: str) -> pd.DataFrame:
 
 def clean_steam_data(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Clean and preprocess Steam dataset.
+    Load 5 lines from Steam dataset at CSV file.
     
     Args:
-        df (pd.DataFrame): Raw Steam dataset
+        file_path (str): Path to the CSV file
         
     Returns:
-        pd.DataFrame: Cleaned dataset
+        pd.DataFrame: Loaded Steam dataset
     """
-    # Create a copy to avoid modifying original data
-    df_clean = df.copy()
-    
-    # Remove duplicates
-    df_clean = df_clean.drop_duplicates()
-    
-    # Handle missing values
-    # (Add specific logic based on the actual dataset structure)
-    
-    print(f"Data cleaned: {len(df_clean)} rows remaining after preprocessing")
-    return df_clean
+    try:
+        df = pd.read_csv(file_path,nrows=5)
+        print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
+        return df
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return pd.DataFrame()
+    except Exception as e:
+        print(f"Error loading data: {str(e)}")
+        return pd.DataFrame()
+
+
+def clean_steam_data(df: pd.DataFrame):
+    df['genres'] = df['genres'].str.strip("[]").str.replace("'", "").str.split(", ")
+    df['release_date'] = pd.to_datetime(df['release_date'],format="%Y-%m-%d").apply(lambda x:x.date())
+    df = df.drop_duplicates(subset='name', keep='last')
 
 def save_processed_data(df: pd.DataFrame, file_path: str) -> None:
     """

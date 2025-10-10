@@ -1,1 +1,5 @@
-raw/
+data/raw/
+.venv
+__pycache__
+.vscode
+src/steam_stats.egg-info/
