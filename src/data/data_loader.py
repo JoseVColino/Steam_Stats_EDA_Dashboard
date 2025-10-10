@@ -6,16 +6,14 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-def load_steam_data(file_path: str) -> pd.DataFrame:
+def load_steam_data(path: Path) -> pd.DataFrame:
     """
-    Load Steam dataset from CSV file.
+    Load Steam dataset from CSV file in path.
     
-    Args:
-        file_path (str): Path to the CSV file
-        
     Returns:
         pd.DataFrame: Loaded Steam dataset
     """
+    file_path = path
     try:
         df = pd.read_csv(file_path)
         print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
@@ -27,7 +25,28 @@ def load_steam_data(file_path: str) -> pd.DataFrame:
         print(f"Error loading data: {str(e)}")
         return pd.DataFrame()
     
-def quick_load_steam_data(file_path: str) -> pd.DataFrame:
+
+def quick_load_steam_data(path: Path) -> pd.DataFrame:
+    """
+    Load first five lines from path csv
+    
+    Returns:
+        pd.DataFrame: with only the first five lines
+    """
+
+    file_path = path
+    try:
+        df = pd.read_csv(file_path,nrows=5)
+        print(f"Successfully loaded dataset with {len(df)} rows and {len(df.columns)} columns")
+        return df
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return pd.DataFrame()
+    except Exception as e:
+        print(f"Error loading data: {str(e)}")
+        return pd.DataFrame()
+
+def clean_steam_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Load 5 lines from Steam dataset at CSV file.
     
