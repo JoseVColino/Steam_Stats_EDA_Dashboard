@@ -49,6 +49,11 @@ def quick_load_steam_data(file_path: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
+def clean_steam_data(df: pd.DataFrame):
+    df['genres'] = df['genres'].str.strip("[]").str.replace("'", "").str.split(", ")
+    df['release_date'] = pd.to_datetime(df['release_date'],format="%Y-%m-%d").apply(lambda x:x.date())
+    df = df.drop_duplicates(subset='name', keep='last')
+
 def save_processed_data(df: pd.DataFrame, file_path: str) -> None:
     """
     Save processed data to CSV file.

@@ -1,0 +1,24 @@
+[project]
+name = "steam-stats"
+version = "0.1.0"
+description = "Exploring Steam data with Streamlit Dashboards"
+authors = [
+    {name = "José Victor Colino", email = "josevictorcolino@gmail.com"},
+    {name = "Leonardo Gomes", email = "leonardoagomes.eng@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.0"
+
+dependencies = [
+    "streamlit",
+    "pandas",
+    "matplotlib",
+    "seaborn"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
